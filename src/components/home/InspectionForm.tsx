@@ -17,6 +17,7 @@ export default function InspectionForm() {
     propertyAddress: '',
     damageType: '',
   })
+  const [consent, setConsent] = useState(false)
 
   const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
@@ -54,7 +55,7 @@ export default function InspectionForm() {
             </h3>
             <div className="mt-3 flex items-center gap-2">
               {STEPS.map((label, i) => (
-                <div key={label} className="flex flex-1 items-center gap-2">
+                <div key={label} className="flex flex-1 items-center gap-2 last:flex-none">
                   <span
                     className={cn(
                       'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold transition-colors duration-200',
@@ -92,13 +93,29 @@ export default function InspectionForm() {
                 <Field icon={<User size={15} />} placeholder="What type of damage? (storm, water, fire...)" value={form.damageType} onChange={update('damageType')} />
               )}
               {step === 2 && (
-                <div className="space-y-2 rounded-xl bg-forest-50 p-4 text-sm text-ink">
-                  <p><span className="text-ink-muted">Name:</span> {form.fullName || '—'}</p>
-                  <p><span className="text-ink-muted">Phone:</span> {form.phone || '—'}</p>
-                  <p><span className="text-ink-muted">Email:</span> {form.email || '—'}</p>
-                  <p><span className="text-ink-muted">Address:</span> {form.propertyAddress || '—'}</p>
-                  <p><span className="text-ink-muted">Damage:</span> {form.damageType || '—'}</p>
-                </div>
+                <>
+                  <div className="space-y-2 rounded-xl bg-forest-50 p-4 text-sm text-ink">
+                    <p><span className="text-ink-muted">Name:</span> {form.fullName || '—'}</p>
+                    <p><span className="text-ink-muted">Phone:</span> {form.phone || '—'}</p>
+                    <p><span className="text-ink-muted">Email:</span> {form.email || '—'}</p>
+                    <p><span className="text-ink-muted">Address:</span> {form.propertyAddress || '—'}</p>
+                    <p><span className="text-ink-muted">Damage:</span> {form.damageType || '—'}</p>
+                  </div>
+                  <label className="mt-3 flex items-start gap-2.5 rounded-[6px] bg-forest-50 p-3 text-[11px] leading-relaxed text-ink-muted">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 shrink-0 accent-forest-500"
+                    />
+                    <span>
+                      By providing your phone number, you agree to receive text messages from Northstar
+                      Public Adjusting for updates and scheduling. Msg &amp; data rates may apply. Reply
+                      STOP to opt-out.{' '}
+                      <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a>
+                    </span>
+                  </label>
+                </>
               )}
             </motion.div>
           </AnimatePresence>
@@ -114,7 +131,8 @@ export default function InspectionForm() {
             )}
             <button
               onClick={step === STEPS.length - 1 ? submit : next}
-              className="flex flex-1 items-center justify-center gap-3 rounded-[7px] bg-forest-500 px-4 py-3.5 text-xs font-extrabold text-white transition-colors duration-150 hover:bg-forest-600"
+              disabled={step === STEPS.length - 1 && !consent}
+              className="flex flex-1 items-center justify-center gap-3 rounded-[7px] bg-forest-500 px-4 py-3.5 text-xs font-extrabold text-white transition-colors duration-150 hover:bg-forest-600 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {step === STEPS.length - 1 ? 'Submit' : 'Next Step'}
               <ArrowRight size={15} />

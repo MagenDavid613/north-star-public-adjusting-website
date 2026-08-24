@@ -1,21 +1,37 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { Phone, Mail, Clock, MapPin } from 'lucide-react'
 import { BRAND } from '@/lib/brand'
 
-// Footer links are intentionally non-navigating (disabled) until these
-// pages/sections actually exist — avoids linking out to 404s.
+// Links point at real pages where they exist; anything without a page yet
+// stays a disabled span so we never link out to a 404.
 const COLUMNS = [
   {
     title: 'Company',
-    links: ['About Us', 'Our Team', 'Contact Us'],
+    links: [
+      { label: 'About Us', href: '/about' },
+      { label: 'Our Team', href: null },
+      { label: 'Contact Us', href: '/contact' },
+    ],
   },
   {
     title: 'Services',
-    links: ['Residential Claims', 'Commercial Claims', 'Storm Damage'],
+    links: [
+      { label: 'Residential Claims', href: '/services/residential-property-claims' },
+      { label: 'Commercial Claims', href: '/services/commercial-property-claims' },
+      { label: 'Storm Damage', href: '/services/storm-damage-claims' },
+    ],
   },
   {
     title: 'Resources',
-    links: ['How It Works', 'Claim Process', 'FAQ'],
+    links: [
+      { label: 'What Is a Public Adjuster?', href: '/questions/what-does-a-public-adjuster-do' },
+      { label: 'How It Works', href: '/how-it-works' },
+      { label: 'Denied Claims', href: '/services/denied-insurance-claims' },
+      { label: 'Underpaid Claims', href: '/services/underpaid-insurance-claims' },
+      { label: 'Claim Checklist', href: '/questions/what-should-i-do-after-property-damage' },
+      { label: 'FAQ', href: '/faq' },
+    ],
   },
 ]
 
@@ -39,11 +55,15 @@ export default function Footer() {
                 {col.title}
               </h4>
               <ul className="space-y-2.5">
-                {col.links.map((label) => (
-                  <li key={label}>
-                    <span className="cursor-not-allowed select-none text-sm text-white/40">
-                      {label}
-                    </span>
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    {link.href ? (
+                      <Link href={link.href} className="text-sm text-white/60 transition-colors hover:text-white">
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <span className="cursor-not-allowed select-none text-sm text-white/40">{link.label}</span>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -76,8 +96,8 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-3 pt-6 text-xs text-white/40 sm:flex-row">
           <span>© {new Date().getFullYear()} {BRAND.name}. All rights reserved.</span>
           <div className="flex gap-5">
-            <span className="cursor-not-allowed select-none">Privacy Policy</span>
-            <span className="cursor-not-allowed select-none">Terms of Service</span>
+            <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white">Terms of Service</Link>
           </div>
         </div>
       </div>

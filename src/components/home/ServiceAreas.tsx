@@ -1,5 +1,14 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { BRAND } from '@/lib/brand'
+
+const STATE_SLUGS: Record<string, string> = {
+  Florida: 'florida',
+  Texas: 'texas',
+  Georgia: 'georgia',
+  'North Carolina': 'north-carolina',
+  Louisiana: 'louisiana',
+}
 
 export default function ServiceAreas() {
   const areas = BRAND.serviceAreas.length > 0 ? BRAND.serviceAreas : [
@@ -7,6 +16,7 @@ export default function ServiceAreas() {
     { state: 'Texas', cities: ['Houston', 'Dallas', 'Austin', 'San Antonio', '& More'] },
     { state: 'Georgia', cities: ['Atlanta', 'Savannah', 'Augusta', 'Macon', '& More'] },
     { state: 'North Carolina', cities: ['Charlotte', 'Raleigh', 'Greensboro', 'Wilmington', '& More'] },
+    { state: 'Louisiana', cities: ['New Orleans', 'Baton Rouge', 'Lafayette', 'Shreveport', '& More'] },
   ]
 
   return (
@@ -29,22 +39,29 @@ export default function ServiceAreas() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
-          {areas.map((area) => (
-            <div key={area.state}>
-              <h3 className="mb-3 text-xs font-black uppercase tracking-wide text-ink">
-                {area.state}
-              </h3>
-              <ul className="space-y-2 text-xs font-semibold text-ink-muted">
-                {area.cities.map((city) => (
-                  <li key={city} className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-forest-500" />
-                    {city}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <div className="grid grid-cols-2 gap-5 md:grid-cols-5">
+          {areas.map((area) => {
+            const slug = STATE_SLUGS[area.state]
+            return (
+              <div key={area.state}>
+                {slug ? (
+                  <Link href={`/locations/${slug}`} className="mb-3 block text-xs font-black uppercase tracking-wide text-ink hover:text-forest-500">
+                    {area.state}
+                  </Link>
+                ) : (
+                  <h3 className="mb-3 text-xs font-black uppercase tracking-wide text-ink">{area.state}</h3>
+                )}
+                <ul className="space-y-2 text-xs font-semibold text-ink-muted">
+                  {area.cities.map((city) => (
+                    <li key={city} className="flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-forest-500" />
+                      {city}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
