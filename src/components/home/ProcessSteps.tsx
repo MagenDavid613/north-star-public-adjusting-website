@@ -11,7 +11,7 @@ const STEPS = [
   { icon: MessageSquare, title: 'Negotiate', desc: 'We handle all talks with the insurer.' },
   { icon: Check, title: 'Maximize', desc: 'We secure the maximum settlement for you.', done: true },
 ]
-
+//
 export default function ProcessSteps() {
   return (
     <section id="how-it-works" className="border-y border-forest-100/60 bg-[#fffdf8] px-4 py-8 lg:px-6">
