@@ -46,6 +46,7 @@ interface FormData {
   phone: string
   email: string
   consent: boolean
+  consentTimestamp: string | null
   propertyType: string | null
   damageTypes: string[]
   address: string
@@ -62,7 +63,7 @@ interface FormData {
 }
 
 const EMPTY_FORM: FormData = {
-  firstName: '', lastName: '', phone: '', email: '', consent: false,
+  firstName: '', lastName: '', phone: '', email: '', consent: false, consentTimestamp: null,
   propertyType: null, damageTypes: [],
   address: '', city: '', state: '', zip: '',
   damageDate: '', isUrgent: false, urgencyDescription: '',
@@ -90,10 +91,18 @@ export default function ClaimIntake() {
 
   const contactValid = form.firstName && form.lastName && form.phone.length >= 10 && form.email.includes('@') && form.consent
 
+  const updateConsent = (checked: boolean) => {
+    update('consent', checked)
+    update('consentTimestamp', checked ? new Date().toISOString() : null)
+  }
+
   const submit = () => {
     // Wired to the same lead-routing pattern as InspectionForm — swap in
     // real submit handling (e.g. /api/website-form) once that backend
     // route exists in this project.
+    // `consent` + `consentTimestamp` should be stored with the lead record —
+    // same idea as the CRM logging already used for verbal SMS consent — so
+    // there's a record tied to this specific phone number and date.
     setSubmitted(true)
   }
 
@@ -187,13 +196,17 @@ export default function ClaimIntake() {
                 <input
                   type="checkbox"
                   checked={form.consent}
-                  onChange={(e) => update('consent', e.target.checked)}
+                  onChange={(e) => updateConsent(e.target.checked)}
                   className="mt-0.5 h-4 w-4 shrink-0 accent-forest-500"
                 />
                 <span>
-                  By providing your phone number, you agree to receive text messages from {BRAND.name} for
-                  updates and scheduling. Msg &amp; data rates may apply. Reply STOP to opt-out.{' '}
-                  <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a>
+                  By checking this box, you agree to receive text messages from {BRAND.name} at the phone
+                  number provided, including appointment confirmations, scheduling updates, claim status
+                  updates, and responses to your inquiries. Message and data rates may apply. Message
+                  frequency varies. Reply STOP to opt out at any time, HELP for help. Consent is not a
+                  condition of purchase. See our{' '}
+                  <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a> and{' '}
+                  <a href="/sms-consent" className="font-semibold text-forest-600 underline">SMS Consent Policy</a>.
                 </span>
               </label>
 

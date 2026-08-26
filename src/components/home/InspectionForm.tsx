@@ -18,9 +18,15 @@ export default function InspectionForm() {
     damageType: '',
   })
   const [consent, setConsent] = useState(false)
+  const [consentTimestamp, setConsentTimestamp] = useState<string | null>(null)
 
   const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
+
+  const updateConsent = (checked: boolean) => {
+    setConsent(checked)
+    setConsentTimestamp(checked ? new Date().toISOString() : null)
+  }
 
   const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1))
   const back = () => setStep((s) => Math.max(s - 1, 0))
@@ -29,6 +35,11 @@ export default function InspectionForm() {
     setSubmitted(true)
     // Wired to the same lead-routing pattern as the old site's /api/website-form.
     // Swap in real submit handling once the backend route exists in this project.
+    // `consent` + `consentTimestamp` should be stored with the lead record —
+    // same idea as the CRM logging already used for verbal SMS consent — so
+    // there's a record tied to this specific phone number and date.
+    const payload = { ...form, consent, consentTimestamp }
+    void payload
   }
 
   return (
@@ -85,6 +96,7 @@ export default function InspectionForm() {
                 <>
                   <Field icon={<User size={15} />} placeholder="Full Name" value={form.fullName} onChange={update('fullName')} />
                   <Field icon={<Phone size={15} />} placeholder="Phone Number" value={form.phone} onChange={update('phone')} />
+                  <ConsentCheckbox checked={consent} onChange={updateConsent} />
                   <Field icon={<Mail size={15} />} placeholder="Email Address" value={form.email} onChange={update('email')} />
                   <Field icon={<MapPin size={15} />} placeholder="Property Address" value={form.propertyAddress} onChange={update('propertyAddress')} />
                 </>
@@ -101,20 +113,7 @@ export default function InspectionForm() {
                     <p><span className="text-ink-muted">Address:</span> {form.propertyAddress || '—'}</p>
                     <p><span className="text-ink-muted">Damage:</span> {form.damageType || '—'}</p>
                   </div>
-                  <label className="mt-3 flex items-start gap-2.5 rounded-[6px] bg-forest-50 p-3 text-[11px] leading-relaxed text-ink-muted">
-                    <input
-                      type="checkbox"
-                      checked={consent}
-                      onChange={(e) => setConsent(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 accent-forest-500"
-                    />
-                    <span>
-                      By providing your phone number, you agree to receive text messages from Northstar
-                      Public Adjusting for updates and scheduling. Msg &amp; data rates may apply. Reply
-                      STOP to opt-out.{' '}
-                      <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a>
-                    </span>
-                  </label>
+                  <ConsentCheckbox checked={consent} onChange={updateConsent} />
                 </>
               )}
             </motion.div>
@@ -156,5 +155,27 @@ function Field({
       <span className="text-forest-400">{icon}</span>
       <input {...props} className="w-full bg-transparent text-sm text-ink placeholder-ink-muted focus:outline-none" />
     </div>
+  )
+}
+
+function ConsentCheckbox({ checked, onChange }: { checked: boolean; onChange: (checked: boolean) => void }) {
+  return (
+    <label className="flex items-start gap-2.5 rounded-[6px] bg-forest-50 p-3 text-[11px] leading-relaxed text-ink-muted">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="mt-0.5 h-4 w-4 shrink-0 accent-forest-500"
+      />
+      <span>
+        By checking this box, you agree to receive text messages from Northstar Public Adjusting at the
+        phone number provided, including appointment confirmations, scheduling updates, claim status
+        updates, and responses to your inquiries. Message and data rates may apply. Message frequency
+        varies. Reply STOP to opt out at any time, HELP for help. Consent is not a condition of purchase.
+        See our{' '}
+        <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a> and{' '}
+        <a href="/sms-consent" className="font-semibold text-forest-600 underline">SMS Consent Policy</a>.
+      </span>
+    </label>
   )
 }
