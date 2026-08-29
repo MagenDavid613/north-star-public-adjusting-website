@@ -20,7 +20,7 @@ export default function InspectionForm() {
   const [consent, setConsent] = useState(false)
   const [consentTimestamp, setConsentTimestamp] = useState<string | null>(null)
 
-  const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
+  const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
 
   const updateConsent = (checked: boolean) => {
@@ -102,7 +102,12 @@ export default function InspectionForm() {
                 </>
               )}
               {step === 1 && (
-                <Field icon={<User size={15} />} placeholder="What type of damage? (storm, water, fire...)" value={form.damageType} onChange={update('damageType')} />
+                <TextAreaField
+                  placeholder="What type of damage? (storm, water, fire...) Feel free to add any other details."
+                  value={form.damageType}
+                  onChange={update('damageType')}
+                  maxLength={1000}
+                />
               )}
               {step === 2 && (
                 <>
@@ -154,6 +159,29 @@ function Field({
     <div className="flex items-center gap-2.5 rounded-[6px] border border-forest-100 bg-[#f9f8f4] px-4 py-3 transition-colors focus-within:border-forest-400">
       <span className="text-forest-400">{icon}</span>
       <input {...props} className="w-full bg-transparent text-sm text-ink placeholder-ink-muted focus:outline-none" />
+    </div>
+  )
+}
+
+function TextAreaField({
+  maxLength,
+  value,
+  ...props
+}: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  return (
+    <div className="rounded-[6px] border border-forest-100 bg-[#f9f8f4] px-4 py-3 transition-colors focus-within:border-forest-400">
+      <textarea
+        {...props}
+        value={value}
+        maxLength={maxLength}
+        rows={6}
+        className="h-32 w-full resize-none bg-transparent text-sm text-ink placeholder-ink-muted focus:outline-none"
+      />
+      {typeof maxLength === 'number' && (
+        <div className="mt-1 text-right text-[10px] text-ink-muted">
+          {String(value ?? '').length}/{maxLength}
+        </div>
+      )}
     </div>
   )
 }

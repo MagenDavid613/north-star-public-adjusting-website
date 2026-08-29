@@ -28,6 +28,8 @@ yarn-error.log*
 # Secrets/credentials — never commit
 recovery-codes*.txt
 public/recovery-codes*.txt
+scripts/credentials.json
+scripts/token.json
 
 # Unrelated assets that ended up in public/ — not part of this project
 "public/Beside iOS Onboarding.zip"
