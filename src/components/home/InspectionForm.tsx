@@ -33,13 +33,27 @@ export default function InspectionForm() {
 
   const submit = async () => {
     setSubmitted(true)
-    // Wired to the same lead-routing pattern as the old site's /api/website-form.
-    // Swap in real submit handling once the backend route exists in this project.
-    // `consent` + `consentTimestamp` should be stored with the lead record —
-    // same idea as the CRM logging already used for verbal SMS consent — so
-    // there's a record tied to this specific phone number and date.
-    const payload = { ...form, consent, consentTimestamp }
-    void payload
+
+    try {
+      await fetch('/api/website-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sourceWidget: 'Hero Inspection Form',
+          fullName: form.fullName,
+          phone: form.phone,
+          email: form.email,
+          propertyAddress: form.propertyAddress,
+          damageTypes: form.damageType,
+          consent,
+          consentTimestamp,
+          pageUrl: typeof window !== 'undefined' ? window.location.href : undefined,
+        }),
+      })
+    } catch (err) {
+      // Never block the visitor's "you're all set" confirmation on this.
+      console.error('Failed to submit lead:', err)
+    }
   }
 
   return (

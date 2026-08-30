@@ -6,6 +6,7 @@
 
 import { extractLead, type ChatMessage } from '@/lib/lead-extractor'
 import { sendToGHL } from '@/lib/ghl'
+import { appendChatbotLead } from '@/lib/leads-sheet'
 
 export const runtime = 'nodejs'
 export const maxDuration = 30
@@ -89,6 +90,25 @@ export async function POST(req: Request) {
       .join('\n\n')
 
     recentlySent.set(sessionId, Date.now())
+
+    // Log to the Chatbot tab of the leads sheet. Runs independently of the
+    // GHL send below — a Sheets failure should never block or be blocked by it.
+    appendChatbotLead({
+      sessionId,
+      firstName: lead.firstName,
+      lastName: lead.lastName,
+      phone: lead.phone,
+      email: lead.email,
+      propertyType: lead.property_type,
+      damageType: lead.damage_type,
+      propertyLocation: lead.property_location,
+      claimStage: lead.claim_stage,
+      isUrgent: lead.is_urgent,
+      hasContactInfo: lead.hasContactInfo,
+      aiSummary: lead.ai_summary,
+      pageUrl,
+      chatHistory: transcript,
+    }).catch((err) => console.error('Sheets append (chatbot) failed:', err))
 
     const result = await sendToGHL({
       source: 'chatbot',

@@ -96,14 +96,41 @@ export default function ClaimIntake() {
     update('consentTimestamp', checked ? new Date().toISOString() : null)
   }
 
-  const submit = () => {
-    // Wired to the same lead-routing pattern as InspectionForm — swap in
-    // real submit handling (e.g. /api/website-form) once that backend
-    // route exists in this project.
-    // `consent` + `consentTimestamp` should be stored with the lead record —
-    // same idea as the CRM logging already used for verbal SMS consent — so
-    // there's a record tied to this specific phone number and date.
+  const submit = async () => {
     setSubmitted(true)
+
+    try {
+      await fetch('/api/website-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sourceWidget: 'Full Intake Form',
+          firstName: form.firstName,
+          lastName: form.lastName,
+          phone: form.phone,
+          email: form.email,
+          consent: form.consent,
+          consentTimestamp: form.consentTimestamp,
+          propertyType: form.propertyType,
+          damageTypes: form.damageTypes.join(', '),
+          propertyAddress: form.address,
+          city: form.city,
+          state: form.state,
+          zip: form.zip,
+          dateOfLoss: form.damageDate,
+          isUrgent: form.isUrgent,
+          urgencyDescription: form.urgencyDescription,
+          insuranceStage: form.insuranceStage,
+          insurerName: form.insurerName,
+          claimDescription: form.claimDescription,
+          claimNumber: form.claimNumber,
+          pageUrl: typeof window !== 'undefined' ? window.location.href : undefined,
+        }),
+      })
+    } catch (err) {
+      // Never block the visitor's confirmation screen on this.
+      console.error('Failed to submit lead:', err)
+    }
   }
 
   if (submitted) {
