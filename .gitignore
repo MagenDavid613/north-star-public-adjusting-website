@@ -30,6 +30,7 @@ recovery-codes*.txt
 public/recovery-codes*.txt
 scripts/credentials.json
 scripts/token.json
+scripts/key.json
 
 # Unrelated assets that ended up in public/ — not part of this project
 "public/Beside iOS Onboarding.zip"
