@@ -9,8 +9,8 @@ export const runtime = 'nodejs'
 // these hands the call to whatever those numbers are already configured to
 // do (currently: ring their cell if set, else fall back to the AI).
 const EXTENSIONS: Record<string, string> = {
-  '301': '+17869980905', // David
-  '302': '+17869472631', // Ari
+  '301': '+17869472631', // David — confirmed 2026-10-08, do not swap
+  '302': '+17869980905', // Ari — confirmed 2026-10-08, do not swap
   // '303': '',           // sales — add once a destination exists
   // '304': '',           // support — add once a destination exists
 }
