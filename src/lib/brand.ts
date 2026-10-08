@@ -9,10 +9,10 @@ export const BRAND = {
   chatAssistantName: 'Nova', // TODO: confirm real assistant name / founder names to reference
   founders: [] as string[], // TODO: e.g. ['David', 'Manny'] — who the assistant escalates to
   phone: {
-    display: '(972) 904-6137',
-    href: 'tel:+19729046137',
+    display: '(866) 782-7577',
+    href: 'tel:+18667827577',
   },
-  email: 'David@northstarpublicadjusting.com',
+  email: 'claims@northstarpublicadjusting.com',
   // Carried over from Country Public Adjusters' figures per the rebrand —
   // not independently verified here. Confirm accuracy before real launch.
   stats: {
