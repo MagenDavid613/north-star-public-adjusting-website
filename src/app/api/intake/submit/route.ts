@@ -19,6 +19,19 @@ function ghlHeaders() {
   }
 }
 
+// Claims.peril_type is a fixed SINGLE_OPTIONS field (wind/water/fire/mold/roof/other) —
+// confirmed via the object schema — but the form's loss_type is free text from a
+// datalist, so it needs mapping rather than a direct pass-through.
+function mapPerilType(lossType: string | undefined): string {
+  const v = (lossType ?? '').toLowerCase()
+  if (v.includes('wind') || v.includes('hurricane')) return 'wind'
+  if (v.includes('water') || v.includes('plumbing') || v.includes('flood')) return 'water'
+  if (v.includes('fire') || v.includes('smoke')) return 'fire'
+  if (v.includes('mold')) return 'mold'
+  if (v.includes('roof')) return 'roof'
+  return 'other'
+}
+
 function splitName(full: string | undefined): { firstName: string; lastName: string } {
   const parts = (full ?? '').trim().split(/\s+/)
   if (parts.length === 0 || !parts[0]) return { firstName: 'Unknown', lastName: '' }
@@ -50,7 +63,10 @@ export async function POST(req: Request) {
     if (!contactRes.ok) throw new Error(`contact upsert failed: ${JSON.stringify(contactJson)}`)
     const contactId = contactJson.contact.id
 
-    // 2) Property
+    // 2) Property — address is unique in GHL, so a repeat client/second claim
+    // at the same address must reuse the existing record, not fail. GHL's own
+    // conflict error hands back the existing record's id, so use that instead
+    // of a separate search round-trip.
     const propertyRes = await fetch(`${GHL_BASE}/objects/custom_objects.properties/records`, {
       method: 'POST',
       headers: ghlHeaders(),
@@ -62,8 +78,14 @@ export async function POST(req: Request) {
       }),
     })
     const propertyJson = await propertyRes.json()
-    if (!propertyRes.ok) throw new Error(`property create failed: ${JSON.stringify(propertyJson)}`)
-    const propertyId = propertyJson.record.id
+    let propertyId: string
+    if (propertyRes.ok) {
+      propertyId = propertyJson.record.id
+    } else if (propertyJson?.errors?.[0]?.errorCode === 'primary_property_conflict') {
+      propertyId = propertyJson.errors[0].conflictingRecordId
+    } else {
+      throw new Error(`property create failed: ${JSON.stringify(propertyJson)}`)
+    }
 
     // 3) Claim — claim_number is required+unique; the form allows it blank
     // (carrier hasn't assigned one at intake), so fall back to a traceable placeholder.
@@ -79,7 +101,7 @@ export async function POST(req: Request) {
           insurance_carrier: intake.insurance_company || undefined,
           policy_number: intake.policy_number || undefined,
           property_address: intake.damage_address || undefined,
-          peril_type: intake.loss_type || undefined,
+          peril_type: mapPerilType(intake.loss_type),
           field_intake_raw_json: JSON.stringify(body),
         },
       }),
