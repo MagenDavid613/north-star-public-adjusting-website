@@ -17,13 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -362,9 +355,9 @@ export default function FieldIntakePage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 pb-28">
       <header className="mb-6">
-        <p className="text-xs font-bold uppercase tracking-wide text-blue-900">North Star Public Adjusting</p>
-        <h1 className="text-2xl font-bold text-blue-950">Field Client Intake</h1>
-        <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
+        <span className="eyebrow">North Star Public Adjusting</span>
+        <h1 className="font-display mt-2 text-2xl font-black text-ink">Field Client Intake</h1>
+        <p className="mt-1 text-sm text-ink-muted max-w-2xl">
           Same questions as the original two-page intake, with a room-by-room damage checklist. This is
           pre-estimate information for the office — not an insurance-company submission or contract.
         </p>
@@ -376,8 +369,8 @@ export default function FieldIntakePage() {
             key={label}
             type="button"
             onClick={() => setStep(i)}
-            className={`rounded-lg border px-3 py-3 text-sm font-semibold ${
-              step === i ? "border-blue-950 bg-blue-950 text-white" : "border-slate-200 bg-white text-slate-600"
+            className={`rounded-[7px] border px-3 py-3 text-sm font-extrabold ${
+              step === i ? "border-forest-500 bg-forest-500 text-white" : "border-forest-100 bg-white text-ink hover:bg-forest-50"
             }`}
           >
             {i + 1}. {label}
@@ -389,12 +382,12 @@ export default function FieldIntakePage() {
         <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
           {step === 0 && (
             <>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Adjuster & client</CardTitle>
-                  <CardDescription>Field sign-up visit. No contract signatures or office workflow on this intake.</CardDescription>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <section className="border-t border-forest-100 pt-6 first:border-t-0 first:pt-0">
+                <div className="mb-4">
+                  <h2 className="font-display text-xl font-bold text-ink">Adjuster & client</h2>
+                  <p className="mt-1 text-sm text-ink-muted">Field sign-up visit. No contract signatures or office workflow on this intake.</p>
+                </div>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <FormField control={form.control} name="intake_date" render={({ field }) => (
                     <FormItem><FormLabel>Date</FormLabel><FormControl><Input type="date" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
@@ -408,7 +401,7 @@ export default function FieldIntakePage() {
                     <FormItem>
                       <FormLabel>Lead source</FormLabel>
                       <FormControl>
-                        <RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-4 pt-2">
+                        <RadioGroup onValueChange={field.onChange} value={field.value ?? ""} className="flex gap-4 pt-2">
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="own" />Own lead</label>
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="office" />Office lead</label>
                         </RadioGroup>
@@ -417,7 +410,7 @@ export default function FieldIntakePage() {
                     </FormItem>
                   )} />
 
-                  <div className="col-span-full"><Separator className="my-1" /><p className="text-sm font-bold text-blue-950">Named insured 1</p></div>
+                  <div className="col-span-full"><Separator className="my-1" /><p className="text-sm font-bold text-forest-500">Named insured 1</p></div>
                   <FormField control={form.control} name="insured1" render={({ field }) => (
                     <FormItem className="col-span-full"><FormLabel>Name exactly as on policy</FormLabel><FormControl><Input placeholder="Named insured 1" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
@@ -428,7 +421,7 @@ export default function FieldIntakePage() {
                     <FormItem><FormLabel>Email</FormLabel><FormControl><Input type="email" placeholder="name@example.com" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
 
-                  <div className="col-span-full"><Separator className="my-1" /><p className="text-sm font-bold text-blue-950">Named insured 2 <span className="font-normal text-muted-foreground">(if listed on policy)</span></p></div>
+                  <div className="col-span-full"><Separator className="my-1" /><p className="text-sm font-bold text-forest-500">Named insured 2 <span className="font-normal text-muted-foreground">(if listed on policy)</span></p></div>
                   <FormField control={form.control} name="insured2" render={({ field }) => (
                     <FormItem className="col-span-full"><FormLabel>Name exactly as on policy</FormLabel><FormControl><Input placeholder="Named insured 2, if any" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
@@ -453,19 +446,19 @@ export default function FieldIntakePage() {
                       <FormItem className="col-span-full"><FormLabel>Mailing address</FormLabel><FormControl><Input placeholder="Street / PO Box, city, state, ZIP" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </section>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Loss & insurance</CardTitle>
-                  <CardDescription>Record what&apos;s known at sign-up. Leave claim number blank if the carrier hasn&apos;t assigned one.</CardDescription>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <section className="border-t border-forest-100 pt-6 first:border-t-0 first:pt-0">
+                <div className="mb-4">
+                  <h2 className="font-display text-xl font-bold text-ink">Loss & insurance</h2>
+                  <p className="mt-1 text-sm text-ink-muted">Record what&apos;s known at sign-up. Leave claim number blank if the carrier hasn&apos;t assigned one.</p>
+                </div>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <FormField control={form.control} name="loss_type" render={({ field }) => (
                     <FormItem>
                       <FormLabel>Loss type</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select onValueChange={field.onChange} value={field.value ?? ""}>
                         <FormControl><SelectTrigger className="w-full"><SelectValue placeholder="Choose loss type" /></SelectTrigger></FormControl>
                         <SelectContent>{LOSS_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
                       </Select>
@@ -479,7 +472,7 @@ export default function FieldIntakePage() {
                     <FormItem className="col-span-full">
                       <FormLabel>Claim situation</FormLabel>
                       <FormControl>
-                        <RadioGroup onValueChange={field.onChange} value={field.value} className="flex flex-wrap gap-4 pt-2">
+                        <RadioGroup onValueChange={field.onChange} value={field.value ?? ""} className="flex flex-wrap gap-4 pt-2">
                           {["New", "Existing", "Reopened", "Supplemental"].map((v) => (
                             <label key={v} className="flex items-center gap-2 text-sm"><RadioGroupItem value={v} />{v}</label>
                           ))}
@@ -507,7 +500,7 @@ export default function FieldIntakePage() {
                     <FormItem className="col-span-full">
                       <FormLabel>Any prior overlapping claim?</FormLabel>
                       <FormControl>
-                        <RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-4 pt-2">
+                        <RadioGroup onValueChange={field.onChange} value={field.value ?? ""} className="flex gap-4 pt-2">
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="No" />No</label>
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="Yes" />Yes</label>
                         </RadioGroup>
@@ -523,7 +516,7 @@ export default function FieldIntakePage() {
                     <FormItem className="col-span-full">
                       <FormLabel>Have any repairs been made?</FormLabel>
                       <FormControl>
-                        <RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-4 pt-2">
+                        <RadioGroup onValueChange={field.onChange} value={field.value ?? ""} className="flex gap-4 pt-2">
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="No" />No</label>
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="Yes" />Yes</label>
                         </RadioGroup>
@@ -532,7 +525,7 @@ export default function FieldIntakePage() {
                     </FormItem>
                   )} />
                   {repairs === "Yes" && (
-                    <div className="col-span-full space-y-3 rounded-lg border bg-slate-50 p-3">
+                    <div className="col-span-full space-y-3 rounded-lg border p-3">
                       <p className="text-xs text-muted-foreground">Select each interior room or exterior area where repairs were made.</p>
                       {repairLocations.map((loc) => (
                         <LocationFollowupEditor
@@ -557,7 +550,7 @@ export default function FieldIntakePage() {
                     <FormItem className="col-span-full">
                       <FormLabel>Contents damaged?</FormLabel>
                       <FormControl>
-                        <RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-4 pt-2">
+                        <RadioGroup onValueChange={field.onChange} value={field.value ?? ""} className="flex gap-4 pt-2">
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="No" />No</label>
                           <label className="flex items-center gap-2 text-sm"><RadioGroupItem value="Yes" />Yes</label>
                         </RadioGroup>
@@ -566,7 +559,7 @@ export default function FieldIntakePage() {
                     </FormItem>
                   )} />
                   {contents === "Yes" && (
-                    <div className="col-span-full space-y-3 rounded-lg border bg-slate-50 p-3">
+                    <div className="col-span-full space-y-3 rounded-lg border p-3">
                       <p className="text-xs text-muted-foreground">Which room(s) contain damaged personal property or contents?</p>
                       {contentsLocations.map((loc) => (
                         <LocationFollowupEditor
@@ -583,37 +576,37 @@ export default function FieldIntakePage() {
                       )} />
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </section>
             </>
           )}
 
           {step === 1 && (
             <>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Mitigation needed</CardTitle>
-                  <CardDescription>Keep the original four quick choices; list affected areas below.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-wrap gap-4">
+              <section className="border-t border-forest-100 pt-6 first:border-t-0 first:pt-0">
+                <div className="mb-4">
+                  <h2 className="font-display text-xl font-bold text-ink">Mitigation needed</h2>
+                  <p className="mt-1 text-sm text-ink-muted">Keep the original four quick choices; list affected areas below.</p>
+                </div>
+                <div className="flex flex-wrap gap-4">
                   {["Tarp", "Dryout", "Mold", "None"].map((v) => (
                     <label key={v} className="flex items-center gap-2 text-sm">
                       <Checkbox checked={mitigation.includes(v)} onCheckedChange={(c) => toggleMitigation(v, !!c)} />
                       {v}
                     </label>
                   ))}
-                </CardContent>
-              </Card>
+                </div>
+              </section>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
+              <section className="border-t border-forest-100 pt-6 first:border-t-0 first:pt-0">
+                <div className="mb-4 flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle>Affected areas</CardTitle>
-                    <CardDescription>Add only damaged rooms, exterior locations or units.</CardDescription>
+                    <h2 className="font-display text-xl font-bold text-ink">Affected areas</h2>
+                    <p className="mt-1 text-sm text-ink-muted">Add only damaged rooms, exterior locations or units.</p>
                   </div>
                   <Badge variant="secondary">{allRooms.filter((r) => r.kind === "room").length} rooms · {totalComponents} components</Badge>
-                </CardHeader>
-                <CardContent className="space-y-4">
+                </div>
+                <div className="space-y-4">
                   {buildings.map((b) => (
                     <BuildingEditor
                       key={b.id}
@@ -633,18 +626,18 @@ export default function FieldIntakePage() {
                     />
                   ))}
                   <Button type="button" variant="outline" onClick={addBuilding}>+ Add another building / structure</Button>
-                </CardContent>
-              </Card>
+                </div>
+              </section>
             </>
           )}
 
           {step === 2 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Review & office handoff</CardTitle>
-                <CardDescription>Confirm everything below, then submit to the office.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+            <section className="border-t border-forest-100 pt-6 first:border-t-0 first:pt-0">
+              <div className="mb-4">
+                <h2 className="font-display text-xl font-bold text-ink">Review & office handoff</h2>
+                <p className="mt-1 text-sm text-ink-muted">Confirm everything below, then submit to the office.</p>
+              </div>
+              <div className="space-y-4">
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary">{buildings.length} structures</Badge>
                   <Badge variant="secondary">{buildings.reduce((n, b) => n + b.units.length, 0)} units</Badge>
@@ -660,8 +653,8 @@ export default function FieldIntakePage() {
                 {submitStatus.kind !== "idle" && (
                   <p className={`text-sm ${submitStatus.kind === "ok" ? "text-green-700" : "text-red-700"}`}>{submitStatus.message}</p>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </section>
           )}
         </form>
       </Form>
@@ -694,9 +687,9 @@ function LocationFollowupEditor({
 }) {
   const types = loc.kind === "exterior" ? EXTERIOR_TYPES : ROOM_TYPES
   return (
-    <div className="rounded-lg border bg-white p-3">
+    <div className="rounded-lg border border-forest-100 bg-white p-3">
       <div className="mb-2 flex items-center justify-between">
-        <strong className="text-xs text-blue-950">{loc.kind === "exterior" ? "Exterior area" : "Interior room"}</strong>
+        <strong className="text-xs text-forest-500">{loc.kind === "exterior" ? "Exterior area" : "Interior room"}</strong>
         <Button type="button" variant="ghost" size="sm" className="text-red-700" onClick={onRemove}>Remove</Button>
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -736,9 +729,9 @@ function RoomEditor({
   const options = compOptions(room.type)
 
   return (
-    <div className="rounded-lg border bg-white">
-      <div className="flex items-center justify-between border-b bg-slate-50 px-3 py-2">
-        <span className="text-sm font-semibold text-blue-950">{title}{room.label ? ` · ${room.label}` : ""}</span>
+    <div className="rounded-lg border border-forest-100 bg-white">
+      <div className="flex items-center justify-between border-b border-forest-100 px-3 py-2">
+        <span className="text-sm font-semibold text-forest-500">{title}{room.label ? ` · ${room.label}` : ""}</span>
         <span className="text-xs text-muted-foreground">{room.components.length} component{room.components.length === 1 ? "" : "s"}</span>
       </div>
       <div className="space-y-3 p-3">
@@ -758,11 +751,11 @@ function RoomEditor({
         </div>
         <Textarea placeholder="Mitigation needed here (if any) / location note" value={room.mitigationNote} onChange={(e) => onUpdate({ mitigationNote: e.target.value })} />
 
-        <p className="text-xs font-bold text-blue-950">Where in this {isExterior ? "area" : "room"} is damaged?</p>
+        <p className="text-xs font-bold text-forest-500">Where in this {isExterior ? "area" : "room"} is damaged?</p>
         {room.components.map((c) => (
-          <div key={c.id} className="rounded-md border bg-slate-50 p-3">
+          <div key={c.id} className="rounded-md border border-forest-100 p-3">
             <div className="mb-2 flex items-center justify-between">
-              <strong className="text-xs text-blue-950">Damaged component / location</strong>
+              <strong className="text-xs text-forest-500">Damaged component / location</strong>
               <Button type="button" variant="ghost" size="sm" className="text-red-700" onClick={() => onRemoveComponent(c.id)}>Remove</Button>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -821,15 +814,15 @@ function BuildingEditor({
   onRemoveComponent: (roomId: string, compId: string) => void
 }) {
   return (
-    <div className="rounded-lg border">
-      <div className="flex items-center justify-between bg-blue-50 px-3 py-2">
-        <strong className="text-sm text-blue-950">{building.name || "Building / structure"}</strong>
+    <div className="rounded-lg border border-forest-100">
+      <div className="flex items-center justify-between border-b border-forest-100 px-3 py-2">
+        <strong className="text-sm text-forest-500">{building.name || "Building / structure"}</strong>
         <Button type="button" variant="ghost" size="sm" onClick={onRemoveBuilding}>Remove</Button>
       </div>
       <div className="space-y-3 p-3">
         <Input placeholder="Main structure, Building A, detached garage..." value={building.name} onChange={(e) => onRename(e.target.value)} />
 
-        <p className="text-sm font-bold text-blue-950">Interior rooms</p>
+        <p className="text-sm font-bold text-forest-500">Interior rooms</p>
         {building.rooms.map((r) => (
           <RoomEditor
             key={r.id}
@@ -843,11 +836,11 @@ function BuildingEditor({
         ))}
         <Button type="button" variant="outline" size="sm" onClick={onAddRoom}>+ Add room</Button>
 
-        {building.units.length > 0 && <p className="text-sm font-bold text-blue-950">Units / suites</p>}
+        {building.units.length > 0 && <p className="text-sm font-bold text-forest-500">Units / suites</p>}
         {building.units.map((u) => (
-          <div key={u.id} className="rounded-lg border bg-slate-50 p-3">
+          <div key={u.id} className="rounded-lg border border-forest-100 p-3">
             <div className="mb-2 flex items-center justify-between">
-              <strong className="text-sm text-blue-950">Unit / suite</strong>
+              <strong className="text-sm text-forest-500">Unit / suite</strong>
               <Button type="button" variant="ghost" size="sm" className="text-red-700" onClick={() => onRemoveUnit(u.id)}>Remove unit</Button>
             </div>
             {/* unit name is local-only state via onUpdateRoom pattern isn't wired for units separately; kept simple */}
@@ -867,7 +860,7 @@ function BuildingEditor({
         ))}
         <Button type="button" variant="outline" size="sm" onClick={onAddUnit}>+ Add unit</Button>
 
-        <p className="text-sm font-bold text-blue-950">Exterior areas</p>
+        <p className="text-sm font-bold text-forest-500">Exterior areas</p>
         {building.exteriors.map((r) => (
           <RoomEditor
             key={r.id}
@@ -902,8 +895,8 @@ function ReviewSummary({
   const name = [d.insured1, d.insured2].filter(Boolean).join(" / ")
   return (
     <div className="space-y-3">
-      <div className="rounded-lg border p-3 text-sm">
-        <h3 className="mb-1 font-bold text-blue-950">Client & claim</h3>
+      <div className="rounded-lg border border-forest-100 p-3 text-sm">
+        <h3 className="mb-1 font-bold text-forest-500">Client & claim</h3>
         <p><b>Insured:</b> {name || "—"}</p>
         <p><b>Insured 1 contact:</b> {[d.insured1_cell, d.insured1_email].filter(Boolean).join(" · ") || "—"}</p>
         <p><b>Damaged property:</b> {d.damage_address || "—"}</p>
@@ -921,8 +914,8 @@ function ReviewSummary({
           ...b.units.flatMap((u) => u.rooms.map((r) => ({ r, loc: u.name || "Unnamed unit" }))),
         ]
         return (
-          <div key={b.id} className="rounded-lg border p-3 text-sm">
-            <h3 className="mb-1 font-bold text-blue-950">{b.name || "Structure"}</h3>
+          <div key={b.id} className="rounded-lg border border-forest-100 p-3 text-sm">
+            <h3 className="mb-1 font-bold text-forest-500">{b.name || "Structure"}</h3>
             {entries.length === 0 && <p className="text-muted-foreground">No damaged areas added.</p>}
             {entries.map(({ r, loc }) => {
               const rname = (r.type === "Other (specify)" ? r.customType : r.type) || "Unspecified area"
@@ -937,8 +930,8 @@ function ReviewSummary({
         )
       })}
       {d.repairs === "Yes" && (
-        <div className="rounded-lg border p-3 text-sm">
-          <h3 className="mb-1 font-bold text-blue-950">Prior repairs reported</h3>
+        <div className="rounded-lg border border-forest-100 p-3 text-sm">
+          <h3 className="mb-1 font-bold text-forest-500">Prior repairs reported</h3>
           {repairLocations.length === 0 && <p className="text-muted-foreground">Locations not specified</p>}
           {repairLocations.map((r) => (
             <p key={r.id}><b>{(r.type === "Other (specify)" ? r.customType : r.type) || r.kind}{r.label ? ` · ${r.label}` : ""}:</b> {r.notes || "—"}</p>
@@ -946,8 +939,8 @@ function ReviewSummary({
         </div>
       )}
       {d.contents === "Yes" && (
-        <div className="rounded-lg border p-3 text-sm">
-          <h3 className="mb-1 font-bold text-blue-950">Damaged contents reported</h3>
+        <div className="rounded-lg border border-forest-100 p-3 text-sm">
+          <h3 className="mb-1 font-bold text-forest-500">Damaged contents reported</h3>
           {contentsLocations.length === 0 && <p className="text-muted-foreground">Locations not specified</p>}
           {contentsLocations.map((r) => (
             <p key={r.id}><b>{(r.type === "Other (specify)" ? r.customType : r.type) || "Room"}{r.label ? ` · ${r.label}` : ""}:</b> {r.notes || "—"}</p>

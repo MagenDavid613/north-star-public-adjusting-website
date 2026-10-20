@@ -1,9 +1,13 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Phone } from 'lucide-react'
 import { BRAND } from '@/lib/brand'
+
+// Internal field-crew tools don't need the public-facing lead-chat widget.
+const HIDDEN_ON_PREFIXES = ['/field-intake']
 
 interface Message {
   id: string
@@ -32,6 +36,7 @@ function TypingDots() {
 }
 
 export default function ChatWidget() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([OPENING_MESSAGE])
   const [input, setInput] = useState('')
@@ -185,6 +190,8 @@ export default function ChatWidget() {
       sendMessage()
     }
   }
+
+  if (HIDDEN_ON_PREFIXES.some((p) => pathname?.startsWith(p))) return null
 
   return (
     <>
