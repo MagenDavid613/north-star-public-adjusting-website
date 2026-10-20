@@ -34,6 +34,42 @@ const config: Config = {
           DEFAULT: '#14201A',
           muted: '#5B6B60',
         },
+        // shadcn/ui token mapping — references the CSS vars in globals.css
+        // (added for the field-intake form's shadcn components; does not
+        // affect the hand-styled marketing site, which uses the tokens above)
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
+        },
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
+        },
+        accent: {
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
+        },
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
+        },
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
@@ -41,6 +77,9 @@ const config: Config = {
       borderRadius: {
         card: '8px',
         pill: '9999px',
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
         card: '0 1px 2px rgba(20,32,26,0.04), 0 12px 28px -18px rgba(20,32,26,0.22)',
