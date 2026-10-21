@@ -211,16 +211,33 @@ export default function FieldIntakePage() {
     mode: "onBlur",
   })
 
-  async function goNext() {
-    if (step === 0) {
-      const ok = await form.trigger(STEP1_FIELDS)
-      if (!ok) return
+  // Validates every step strictly between the current one and the target
+  // before jumping forward, so clicking a step-nav button ahead (not just
+  // the Continue button) can't skip required fields. Moving backward is
+  // always allowed, no validation needed.
+  async function goToStep(target: number) {
+    const clamped = Math.max(0, Math.min(target, 2))
+    for (let s = step; s < clamped; s++) {
+      if (s === 0) {
+        const ok = await form.trigger(STEP1_FIELDS)
+        if (!ok) {
+          setStep(0)
+          return
+        }
+      }
+      if (s === 1) {
+        const ok = await form.trigger(STEP2_FIELDS)
+        if (!ok) {
+          setStep(1)
+          return
+        }
+      }
     }
-    if (step === 1) {
-      const ok = await form.trigger(STEP2_FIELDS)
-      if (!ok) return
-    }
-    setStep((s) => Math.min(s + 1, 2))
+    setStep(clamped)
+  }
+
+  function goNext() {
+    return goToStep(step + 1)
   }
 
   function goBack() {
@@ -370,10 +387,6 @@ export default function FieldIntakePage() {
         <Image src="/North_Star_PA_logo_main.png" alt="North Star Public Adjusting" width={64} height={64} className="h-14 w-14 object-contain" />
         <div>
           <h1 className="text-2xl font-black text-ink">Field Client Intake</h1>
-          <p className="mt-0.5 text-sm text-ink-muted max-w-2xl">
-            Same questions as the original two-page intake, with a room-by-room damage checklist. This is
-            pre-estimate information for the office — not an insurance-company submission or contract.
-          </p>
         </div>
       </header>
 
@@ -382,7 +395,7 @@ export default function FieldIntakePage() {
           <button
             key={label}
             type="button"
-            onClick={() => setStep(i)}
+            onClick={() => goToStep(i)}
             className={`rounded-[7px] border px-3 py-3 text-sm font-extrabold ${
               step === i ? "border-brand-500 bg-brand-500 text-white" : "border-brand-100 bg-white text-ink hover:bg-brand-50"
             }`}
