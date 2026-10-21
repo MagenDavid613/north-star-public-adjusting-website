@@ -41,3 +41,10 @@ scripts/key.json
 next-env.d.ts
 
 .vercel
+
+# Chatbot eval output
+chatbot/eval/reports/
+
+# AI coding assistant local config — never part of the project
+.claude/
+.codex/
