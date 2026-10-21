@@ -23,6 +23,14 @@ const config: Config = {
           600: '#17301F',
           900: '#0E1B13',
         },
+        // Field intake form accent, per request — deep indigo/blue.
+        brand: {
+          DEFAULT: '#0F069A',
+          50: '#F0EEFD',
+          100: '#D7D2F7',
+          500: '#0F069A',
+          600: '#0C0578',
+        },
         gold: {
           DEFAULT: '#B4914F',
           100: '#F1E7D3',
