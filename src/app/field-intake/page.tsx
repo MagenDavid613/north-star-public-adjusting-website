@@ -384,7 +384,7 @@ export default function FieldIntakePage() {
     <div className="min-h-screen bg-white">
     <div className="mx-auto max-w-4xl px-4 py-8 pb-28">
       <header className="mb-6 flex items-center gap-4 border-b border-brand-100 pb-6">
-        <Image src="/North_Star_PA_logo_main.png" alt="North Star Public Adjusting" width={64} height={64} className="h-14 w-14 object-contain" />
+        <Image src="/North_Star_PA_logo_main.png" alt="North Star Public Adjusting" width={820} height={314} className="h-20 w-auto object-contain" priority />
         <div>
           <h1 className="text-2xl font-black text-ink">Field Client Intake</h1>
         </div>
