@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import ChatWidget from '@/components/layout/ChatWidget'
+import SiteChrome from '@/components/layout/SiteChrome'
 import JsonLd from '@/components/shared/JsonLd'
 import { BRAND } from '@/lib/brand'
 import { organizationSchema } from '@/lib/schema'
@@ -17,10 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="font-sans antialiased">
         <JsonLd data={organizationSchema()} />
-        <Header />
-        {children}
-        <Footer />
-        <ChatWidget />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )

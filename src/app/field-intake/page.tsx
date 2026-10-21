@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -353,14 +354,17 @@ export default function FieldIntakePage() {
   const mailDifferent = form.watch("mailing_address_is_different")
 
   return (
+    <div className="min-h-screen bg-white">
     <div className="mx-auto max-w-4xl px-4 py-8 pb-28">
-      <header className="mb-6">
-        <span className="eyebrow">North Star Public Adjusting</span>
-        <h1 className="font-display mt-2 text-2xl font-black text-ink">Field Client Intake</h1>
-        <p className="mt-1 text-sm text-ink-muted max-w-2xl">
-          Same questions as the original two-page intake, with a room-by-room damage checklist. This is
-          pre-estimate information for the office — not an insurance-company submission or contract.
-        </p>
+      <header className="mb-6 flex items-center gap-4 border-b border-forest-100 pb-6">
+        <Image src="/North_Star_PA_logo_main.png" alt="North Star Public Adjusting" width={64} height={64} className="h-14 w-14 object-contain" />
+        <div>
+          <h1 className="text-2xl font-black text-ink">Field Client Intake</h1>
+          <p className="mt-0.5 text-sm text-ink-muted max-w-2xl">
+            Same questions as the original two-page intake, with a room-by-room damage checklist. This is
+            pre-estimate information for the office — not an insurance-company submission or contract.
+          </p>
+        </div>
       </header>
 
       <nav className="mb-6 grid grid-cols-3 gap-2">
@@ -670,6 +674,7 @@ export default function FieldIntakePage() {
           )}
         </div>
       </div>
+    </div>
     </div>
   )
 }
