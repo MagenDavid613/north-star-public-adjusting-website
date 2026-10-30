@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Phone, Mail, MapPin, ArrowRight, ArrowLeft, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import SmsConsentFields from '@/components/shared/SmsConsentFields'
 
 const STEPS = ['Contact', 'Claim Details', 'Review']
 
@@ -19,6 +20,8 @@ export default function InspectionForm() {
   })
   const [consent, setConsent] = useState(false)
   const [consentTimestamp, setConsentTimestamp] = useState<string | null>(null)
+  const [marketingConsent, setMarketingConsent] = useState(false)
+  const [marketingConsentTimestamp, setMarketingConsentTimestamp] = useState<string | null>(null)
 
   const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
@@ -26,6 +29,11 @@ export default function InspectionForm() {
   const updateConsent = (checked: boolean) => {
     setConsent(checked)
     setConsentTimestamp(checked ? new Date().toISOString() : null)
+  }
+
+  const updateMarketingConsent = (checked: boolean) => {
+    setMarketingConsent(checked)
+    setMarketingConsentTimestamp(checked ? new Date().toISOString() : null)
   }
 
   const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1))
@@ -47,6 +55,8 @@ export default function InspectionForm() {
           damageTypes: form.damageType,
           consent,
           consentTimestamp,
+          marketingConsent,
+          marketingConsentTimestamp,
           pageUrl: typeof window !== 'undefined' ? window.location.href : undefined,
         }),
       })
@@ -110,7 +120,6 @@ export default function InspectionForm() {
                 <>
                   <Field icon={<User size={15} />} placeholder="Full Name" value={form.fullName} onChange={update('fullName')} />
                   <Field icon={<Phone size={15} />} placeholder="Phone Number" value={form.phone} onChange={update('phone')} />
-                  <ConsentCheckbox checked={consent} onChange={updateConsent} />
                   <Field icon={<Mail size={15} />} placeholder="Email Address" value={form.email} onChange={update('email')} />
                   <Field icon={<MapPin size={15} />} placeholder="Property Address" value={form.propertyAddress} onChange={update('propertyAddress')} />
                 </>
@@ -132,7 +141,12 @@ export default function InspectionForm() {
                     <p><span className="text-ink-muted">Address:</span> {form.propertyAddress || '—'}</p>
                     <p><span className="text-ink-muted">Damage:</span> {form.damageType || '—'}</p>
                   </div>
-                  <ConsentCheckbox checked={consent} onChange={updateConsent} />
+                  <SmsConsentFields
+                    care={consent}
+                    marketing={marketingConsent}
+                    onCareChange={updateConsent}
+                    onMarketingChange={updateMarketingConsent}
+                  />
                 </>
               )}
             </motion.div>
@@ -149,7 +163,6 @@ export default function InspectionForm() {
             )}
             <button
               onClick={step === STEPS.length - 1 ? submit : next}
-              disabled={step === STEPS.length - 1 && !consent}
               className="flex flex-1 items-center justify-center gap-3 rounded-[7px] bg-forest-500 px-4 py-3.5 text-xs font-extrabold text-white transition-colors duration-150 hover:bg-forest-600 disabled:cursor-not-allowed disabled:opacity-40"
             >
               {step === STEPS.length - 1 ? 'Submit' : 'Next Step'}
@@ -197,27 +210,5 @@ function TextAreaField({
         </div>
       )}
     </div>
-  )
-}
-
-function ConsentCheckbox({ checked, onChange }: { checked: boolean; onChange: (checked: boolean) => void }) {
-  return (
-    <label className="flex items-start gap-2.5 rounded-[6px] bg-forest-50 p-3 text-[11px] leading-relaxed text-ink-muted">
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-        className="mt-0.5 h-4 w-4 shrink-0 accent-forest-500"
-      />
-      <span>
-        By checking this box, you agree to receive text messages from Northstar Public Adjusting at the
-        phone number provided, including appointment confirmations, scheduling updates, claim status
-        updates, and responses to your inquiries. Message and data rates may apply. Message frequency
-        varies. Reply STOP to opt out at any time, HELP for help. Consent is not a condition of purchase.
-        See our{' '}
-        <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a> and{' '}
-        <a href="/sms-consent" className="font-semibold text-forest-600 underline">SMS Consent Policy</a>.
-      </span>
-    </label>
   )
 }

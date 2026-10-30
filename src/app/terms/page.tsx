@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <>
-      <PageHero eyebrow="Legal" title="Terms of Service" subtitle="Effective Date: TBD · Last Updated: TBD" />
+      <PageHero eyebrow="Legal" title="Terms of Service" subtitle={`Effective Date: ${BRAND.legalDates.effective} · Last Updated: ${BRAND.legalDates.updated}`} />
 
       <section className="px-4 py-16 lg:px-6">
         <div className="mx-auto max-w-2xl space-y-6 text-sm leading-relaxed text-ink [&_h2]:font-display [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-black [&_h2]:text-ink [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5 [&_a]:font-semibold [&_a]:text-forest-600">
@@ -58,10 +58,12 @@ export default function TermsPage() {
 
           <h2>5. Communications and SMS</h2>
           <p>
-            By providing your phone number and consenting to SMS communications, you agree to receive text
-            messages from {BRAND.name} regarding your claim, appointments, and related matters. Message and
-            data rates may apply. Reply <strong>STOP</strong> at any time to opt out. See our{' '}
-            <a href="/sms-consent">SMS Consent Policy</a> for full details.
+            By providing your phone number and opting in, you agree to receive text messages from{' '}
+            {BRAND.smsName} about your claim, appointments, and, if you opted in separately, promotional
+            offers. Message frequency varies. Message and data rates may apply. Reply <strong>STOP</strong>{' '}
+            at any time to opt out or <strong>HELP</strong> for help. Consent is not a condition of
+            purchase. See our <a href="/sms-consent">SMS Consent Policy</a> and{' '}
+            <a href="/privacy">Privacy Policy</a> for details.
           </p>
 
           <h2>6. Intellectual Property</h2>
@@ -101,7 +103,8 @@ export default function TermsPage() {
           <p>If you have questions about these Terms, please contact us:</p>
           <p>
             <strong>{BRAND.name}</strong><br />
-            Address to be confirmed<br />
+            {BRAND.address.street}<br />
+            {BRAND.address.cityStateZip}<br />
             Phone: <a href={BRAND.phone.href}>{BRAND.phone.display}</a><br />
             Email: <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
           </p>

@@ -4,6 +4,10 @@
 // can go.
 export const BRAND = {
   name: 'Northstar Public Adjusting',
+  legalName: 'North Star Public Adjusting LLC',
+  smsName: 'North Star Public Adjusting',
+  address: { street: '4111 Stirling Road', cityStateZip: 'Davie, FL 33314' },
+  legalDates: { effective: 'October 30, 2026', updated: 'October 30, 2026' },
   shortName: 'Northstar',
   tagline: 'Your insurance company has adjusters. Now you do too.',
   chatAssistantName: 'Nova', // TODO: confirm real assistant name / founder names to reference

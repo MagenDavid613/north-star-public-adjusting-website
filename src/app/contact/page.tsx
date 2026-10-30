@@ -96,14 +96,13 @@ export default function ContactPage() {
             ))}
           </div>
 
-          {/* TODO: confirm real office address before publishing */}
           <div className="flex items-start gap-4 rounded-[8px] border border-forest-100 bg-[#f4f1e9] px-6 py-5">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[6px] border border-forest-100 bg-white text-forest-500">
               <MapPin size={16} />
             </span>
             <div>
               <p className="text-sm font-bold text-ink">Office Address</p>
-              <p className="text-sm text-ink-muted">Address to be confirmed</p>
+              <p className="text-sm text-ink-muted">{BRAND.address.street}, {BRAND.address.cityStateZip}</p>
             </div>
           </div>
         </div>

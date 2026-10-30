@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { BRAND } from '@/lib/brand'
+import SmsConsentFields from '@/components/shared/SmsConsentFields'
 
 const STEPS = ['Contact', 'Property', 'Damage', 'Location', 'Timing', 'Insurance', 'Details']
 
@@ -47,6 +48,8 @@ interface FormData {
   email: string
   consent: boolean
   consentTimestamp: string | null
+  marketingConsent: boolean
+  marketingConsentTimestamp: string | null
   propertyType: string | null
   damageTypes: string[]
   address: string
@@ -63,7 +66,7 @@ interface FormData {
 }
 
 const EMPTY_FORM: FormData = {
-  firstName: '', lastName: '', phone: '', email: '', consent: false, consentTimestamp: null,
+  firstName: '', lastName: '', phone: '', email: '', consent: false, consentTimestamp: null, marketingConsent: false, marketingConsentTimestamp: null,
   propertyType: null, damageTypes: [],
   address: '', city: '', state: '', zip: '',
   damageDate: '', isUrgent: false, urgencyDescription: '',
@@ -89,11 +92,16 @@ export default function ClaimIntake() {
   const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1))
   const back = () => setStep((s) => Math.max(s - 1, 0))
 
-  const contactValid = form.firstName && form.lastName && form.phone.length >= 10 && form.email.includes('@') && form.consent
+  const contactValid = form.firstName && form.lastName && form.phone.length >= 10 && form.email.includes('@')
 
   const updateConsent = (checked: boolean) => {
     update('consent', checked)
     update('consentTimestamp', checked ? new Date().toISOString() : null)
+  }
+
+  const updateMarketingConsent = (checked: boolean) => {
+    update('marketingConsent', checked)
+    update('marketingConsentTimestamp', checked ? new Date().toISOString() : null)
   }
 
   const submit = async () => {
@@ -111,6 +119,8 @@ export default function ClaimIntake() {
           email: form.email,
           consent: form.consent,
           consentTimestamp: form.consentTimestamp,
+          marketingConsent: form.marketingConsent,
+          marketingConsentTimestamp: form.marketingConsentTimestamp,
           propertyType: form.propertyType,
           damageTypes: form.damageTypes.join(', '),
           propertyAddress: form.address,
@@ -219,23 +229,13 @@ export default function ClaimIntake() {
                 <input type="email" placeholder="Email address *" value={form.email} onChange={(e) => update('email', e.target.value)} className={inputClass()} />
               </div>
 
-              <label className="mt-4 flex items-start gap-3 rounded-[6px] bg-[#f4f1e9] p-4 text-xs leading-relaxed text-ink-muted">
-                <input
-                  type="checkbox"
-                  checked={form.consent}
-                  onChange={(e) => updateConsent(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 shrink-0 accent-forest-500"
-                />
-                <span>
-                  By checking this box, you agree to receive text messages from {BRAND.name} at the phone
-                  number provided, including appointment confirmations, scheduling updates, claim status
-                  updates, and responses to your inquiries. Message and data rates may apply. Message
-                  frequency varies. Reply STOP to opt out at any time, HELP for help. Consent is not a
-                  condition of purchase. See our{' '}
-                  <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a> and{' '}
-                  <a href="/sms-consent" className="font-semibold text-forest-600 underline">SMS Consent Policy</a>.
-                </span>
-              </label>
+              <SmsConsentFields
+                className="mt-4"
+                care={form.consent}
+                marketing={form.marketingConsent}
+                onCareChange={updateConsent}
+                onMarketingChange={updateMarketingConsent}
+              />
 
               <button
                 onClick={next}

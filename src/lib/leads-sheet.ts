@@ -64,7 +64,8 @@ async function appendRow(sheetTitle: string, row: (string | number | boolean)[])
 // Email, Consent, Consent Timestamp, Property Type, Damage Type(s),
 // Property Address, City, State, ZIP, Date of Loss, Is Urgent,
 // Urgency Description, Insurance Stage, Insurer Name, Claim Description,
-// Claim Number, Page URL, Session ID
+// Claim Number, Page URL, Session ID, Marketing Consent,
+// Marketing Consent Timestamp
 // ─────────────────────────────────────────────────────────────
 export interface WebFormLead {
   sourceWidget: 'Hero Inspection Form' | 'Full Intake Form'
@@ -75,6 +76,8 @@ export interface WebFormLead {
   email?: string | null
   consent: boolean
   consentTimestamp?: string | null
+  marketingConsent?: boolean
+  marketingConsentTimestamp?: string | null
   propertyType?: string | null
   damageTypes?: string | null
   propertyAddress?: string | null
@@ -118,6 +121,8 @@ export async function appendWebFormLead(lead: WebFormLead) {
     lead.claimNumber ?? '',
     lead.pageUrl ?? '',
     lead.sessionId ?? '',
+    lead.marketingConsent ? 'Y' : 'N',
+    lead.marketingConsentTimestamp ?? '',
   ])
 }
 

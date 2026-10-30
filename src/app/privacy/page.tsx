@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <PageHero eyebrow="Legal" title="Privacy Policy" subtitle="Effective Date: TBD · Last Updated: TBD" />
+      <PageHero eyebrow="Legal" title="Privacy Policy" subtitle={`Effective Date: ${BRAND.legalDates.effective} · Last Updated: ${BRAND.legalDates.updated}`} />
 
       <section className="px-4 py-16 lg:px-6">
         <div className="mx-auto max-w-2xl space-y-6 text-sm leading-relaxed text-ink [&_h2]:font-display [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-black [&_h2]:text-ink [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5 [&_a]:font-semibold [&_a]:text-forest-600">
@@ -43,13 +43,12 @@ export default function PrivacyPage() {
 
           <h2>3. SMS Communications</h2>
           <p>
-            We send SMS messages only to individuals who have provided explicit consent. Consent is obtained
-            verbally during a phone call or in-person intake. You may opt out at any time by replying{' '}
-            <strong>STOP</strong> to any text message. Message and data rates may apply.
-          </p>
-          <p>
-            We do not use SMS for cold outreach, purchased lead lists, or unsolicited marketing. For full
-            details, see our <a href="/sms-consent">SMS Consent Policy</a>.
+            We send SMS messages only to individuals who have given consent, either through an unchecked
+            consent box on our website forms or verbally during a phone call or intake. Messages include
+            customer care updates and, if you opted in separately, promotional offers. You may opt out at
+            any time by replying <strong>STOP</strong>, or ask for help by replying <strong>HELP</strong>.
+            Message frequency varies. Message and data rates may apply. We do not use SMS for cold outreach
+            or purchased lead lists. For full details, see our <a href="/sms-consent">SMS Consent Policy</a>.
           </p>
 
           <h2>4. Sharing of Information</h2>
@@ -59,6 +58,10 @@ export default function PrivacyPage() {
             <li><strong>Service Providers:</strong> Third-party vendors who assist us in operating our business (CRM platforms, scheduling tools, communication software), each bound by confidentiality obligations;</li>
             <li><strong>Legal Requirements:</strong> When required by law, court order, or governmental authority.</li>
           </ul>
+          <p>
+            We do not sell, rent, or share mobile phone numbers or SMS opt-in data with third parties or
+            affiliates for their marketing purposes.
+          </p>
 
           <h2>5. Data Retention</h2>
           <p>
@@ -100,8 +103,8 @@ export default function PrivacyPage() {
           <p>If you have questions about this Privacy Policy, please contact us:</p>
           <p>
             <strong>{BRAND.name}</strong><br />
-            {/* TODO: add real office address */}
-            Address to be confirmed<br />
+            {BRAND.address.street}<br />
+            {BRAND.address.cityStateZip}<br />
             Phone: <a href={BRAND.phone.href}>{BRAND.phone.display}</a><br />
             Email: <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
           </p>
