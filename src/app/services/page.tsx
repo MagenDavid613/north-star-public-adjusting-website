@@ -9,7 +9,7 @@ import { BRAND } from '@/lib/brand'
 export const metadata: Metadata = {
   title: `Public Adjuster Services | ${BRAND.name}`,
   description:
-    'Northstar Public Adjusting handles every type of property insurance claim — hail, wind, water, roof, storm, hurricane, fire, commercial, and residential. Free inspection, no upfront cost.',
+    'North Star Public Adjusting handles every type of property insurance claim — hail, wind, water, roof, storm, hurricane, fire, commercial, and residential. Free inspection, no upfront cost.',
 }
 
 export default function ServicesPage() {

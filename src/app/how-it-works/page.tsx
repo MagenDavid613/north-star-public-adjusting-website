@@ -9,7 +9,7 @@ import { faqPageSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: `How It Works | ${BRAND.name}`,
   description:
-    'What happens when you hire Northstar Public Adjusting — from your first call to a resolved claim. Free inspection, no upfront cost, no fee unless we recover money for you.',
+    'What happens when you hire North Star Public Adjusting — from your first call to a resolved claim. Free inspection, no upfront cost, no fee unless we recover money for you.',
 }
 
 const STEPS = [

@@ -42,7 +42,7 @@ export default function ComparisonTable() {
             className="overflow-hidden rounded-[8px] border border-forest-100 bg-white text-ink shadow-card"
           >
             <h3 className="bg-forest-500 px-5 py-3 text-[10px] font-black uppercase tracking-wide text-white">
-              With Northstar Public Adjusting
+              With North Star Public Adjusting
             </h3>
             <ul className="space-y-3 p-5">
               {WITH_US.map((item) => (

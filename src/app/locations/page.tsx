@@ -9,7 +9,7 @@ import { BRAND } from '@/lib/brand'
 export const metadata: Metadata = {
   title: `Where We Serve | ${BRAND.name}`,
   description:
-    'Northstar Public Adjusting represents property owners in Florida, Texas, Georgia, North Carolina, and Louisiana. Free inspection, no upfront cost.',
+    'North Star Public Adjusting represents property owners in Florida, Texas, Georgia, North Carolina, and Louisiana. Free inspection, no upfront cost.',
 }
 
 export default function LocationsPage() {
@@ -20,7 +20,7 @@ export default function LocationsPage() {
       <PageHero
         eyebrow="Locations"
         title="Where we serve property owners"
-        subtitle="Northstar Public Adjusting represents policyholders across the following states. If your property is outside these areas, call us — we'll confirm whether we can help."
+        subtitle="North Star Public Adjusting represents policyholders across the following states. If your property is outside these areas, call us — we'll confirm whether we can help."
       />
 
       <CTARow />

@@ -17,7 +17,7 @@ const TEAM = [
     initial: 'D',
     name: 'David',
     title: 'Founder',
-    body: 'David leads Northstar Public Adjusting with a focus on maximizing settlements and making sure every client is treated like a person, not a case number.',
+    body: 'David leads North Star Public Adjusting with a focus on maximizing settlements and making sure every client is treated like a person, not a case number.',
   },
 ]
 

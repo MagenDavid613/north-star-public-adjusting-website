@@ -32,7 +32,7 @@ export default function ServiceAreas() {
         <div className="relative mx-auto aspect-[16/10] w-full max-w-[300px]">
           <Image
             src="/us-map.png"
-            alt="Map of states Northstar Public Adjusting serves"
+            alt="Map of states North Star Public Adjusting serves"
             fill
             sizes="300px"
             className="object-contain"
