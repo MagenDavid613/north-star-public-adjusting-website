@@ -20,8 +20,6 @@ export default function InspectionForm() {
   })
   const [consent, setConsent] = useState(false)
   const [consentTimestamp, setConsentTimestamp] = useState<string | null>(null)
-  const [marketingConsent, setMarketingConsent] = useState(false)
-  const [marketingConsentTimestamp, setMarketingConsentTimestamp] = useState<string | null>(null)
 
   const update = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
@@ -29,11 +27,6 @@ export default function InspectionForm() {
   const updateConsent = (checked: boolean) => {
     setConsent(checked)
     setConsentTimestamp(checked ? new Date().toISOString() : null)
-  }
-
-  const updateMarketingConsent = (checked: boolean) => {
-    setMarketingConsent(checked)
-    setMarketingConsentTimestamp(checked ? new Date().toISOString() : null)
   }
 
   const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1))
@@ -55,8 +48,6 @@ export default function InspectionForm() {
           damageTypes: form.damageType,
           consent,
           consentTimestamp,
-          marketingConsent,
-          marketingConsentTimestamp,
           pageUrl: typeof window !== 'undefined' ? window.location.href : undefined,
         }),
       })
@@ -141,12 +132,7 @@ export default function InspectionForm() {
                     <p><span className="text-ink-muted">Address:</span> {form.propertyAddress || '—'}</p>
                     <p><span className="text-ink-muted">Damage:</span> {form.damageType || '—'}</p>
                   </div>
-                  <SmsConsentFields
-                    care={consent}
-                    marketing={marketingConsent}
-                    onCareChange={updateConsent}
-                    onMarketingChange={updateMarketingConsent}
-                  />
+                  <SmsConsentFields care={consent} onCareChange={updateConsent} />
                 </>
               )}
             </motion.div>

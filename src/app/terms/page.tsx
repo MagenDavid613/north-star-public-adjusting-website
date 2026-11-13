@@ -58,12 +58,12 @@ export default function TermsPage() {
 
           <h2>5. Communications and SMS</h2>
           <p>
-            By providing your phone number and opting in, you agree to receive text messages from{' '}
-            {BRAND.smsName} about your claim, appointments, and, if you opted in separately, promotional
-            offers. Message frequency varies. Message and data rates may apply. Reply <strong>STOP</strong>{' '}
-            at any time to opt out or <strong>HELP</strong> for help. Consent is not a condition of
-            purchase. See our <a href="/sms-consent">SMS Consent Policy</a> and{' '}
-            <a href="/privacy">Privacy Policy</a> for details.
+            By checking the SMS consent box on our forms or giving verbal consent, you agree to receive
+            informational text messages from {BRAND.smsName} about your claim and appointments. Message
+            frequency varies. Message and data rates may apply. Reply <strong>STOP</strong> at any time to
+            opt out or <strong>HELP</strong> for help. Consent is not a condition of purchase. See our{' '}
+            <a href="/sms-consent">SMS Consent Policy</a> and <a href="/privacy">Privacy Policy</a> for
+            details.
           </p>
 
           <h2>6. Intellectual Property</h2>

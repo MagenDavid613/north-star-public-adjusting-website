@@ -7,9 +7,8 @@ import { appendWebFormLead, type WebFormLead } from '@/lib/leads-sheet'
 export const runtime = 'nodejs'
 export const maxDuration = 30
 
-interface WebFormRequestBody extends Omit<WebFormLead, 'consent' | 'marketingConsent'> {
+interface WebFormRequestBody extends Omit<WebFormLead, 'consent'> {
   consent?: boolean
-  marketingConsent?: boolean
 }
 
 export async function POST(req: Request) {
@@ -23,7 +22,7 @@ export async function POST(req: Request) {
       return Response.json({ ok: false, reason: 'no phone or email provided' }, { status: 400 })
     }
 
-    const result = await appendWebFormLead({ ...body, consent: Boolean(body.consent), marketingConsent: Boolean(body.marketingConsent) })
+    const result = await appendWebFormLead({ ...body, consent: Boolean(body.consent) })
 
     return Response.json({ ok: result.ok, reason: result.reason })
   } catch (err) {
