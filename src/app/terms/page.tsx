@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <>
-      <PageHero eyebrow="Legal" title="Terms of Service" subtitle={`Effective Date: ${BRAND.legalDates.effective} · Last Updated: ${BRAND.legalDates.updated}`} />
+      <PageHero eyebrow="Legal" title="Terms of Service" subtitle={`Effective Date: ${BRAND.legalDates.terms.effective} · Last Updated: ${BRAND.legalDates.terms.updated}`} />
 
       <section className="px-4 py-16 lg:px-6">
         <div className="mx-auto max-w-2xl space-y-6 text-sm leading-relaxed text-ink [&_h2]:font-display [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-black [&_h2]:text-ink [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5 [&_a]:font-semibold [&_a]:text-forest-600">

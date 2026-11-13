@@ -7,7 +7,15 @@ export const BRAND = {
   legalName: 'North Star Public Adjusting LLC',
   smsName: 'North Star Public Adjusting',
   address: { street: '4111 Stirling Road', cityStateZip: 'Davie, FL 33314' },
-  legalDates: { effective: 'October 30, 2026', updated: 'October 30, 2026' },
+  // Each legal document tracks its own effective/updated dates — they
+  // diverge whenever only one document's terms actually change.
+  legalDates: {
+    terms: { effective: 'October 30, 2026', updated: 'November 13, 2026' },
+    privacy: { effective: 'October 30, 2026', updated: 'November 13, 2026' },
+    // SMS Consent Policy's terms materially changed (promotional option
+    // removed) on November 13, 2026, so that's also its effective date.
+    smsConsent: { effective: 'November 13, 2026', updated: 'November 13, 2026' },
+  },
   shortName: 'North Star',
   tagline: 'Your insurance company has adjusters. Now you do too.',
   chatAssistantName: 'Nova', // TODO: confirm real assistant name / founder names to reference

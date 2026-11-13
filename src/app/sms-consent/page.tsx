@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function SMSConsentPage() {
   return (
     <>
-      <PageHero eyebrow="Legal" title="SMS Consent Policy" subtitle={`Effective Date: ${BRAND.legalDates.effective} · Last Updated: ${BRAND.legalDates.updated}`} />
+      <PageHero eyebrow="Legal" title="SMS Consent Policy" subtitle={`Effective Date: ${BRAND.legalDates.smsConsent.effective} · Last Updated: ${BRAND.legalDates.smsConsent.updated}`} />
 
       <section className="px-4 py-16 lg:px-6">
         <div className="mx-auto max-w-2xl space-y-6 text-sm leading-relaxed text-ink [&_h2]:font-display [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-black [&_h2]:text-ink [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5 [&_a]:font-semibold [&_a]:text-forest-600 [&_blockquote]:rounded-[8px] [&_blockquote]:border [&_blockquote]:border-forest-100 [&_blockquote]:bg-[#f4f1e9] [&_blockquote]:p-4 [&_blockquote]:italic">
