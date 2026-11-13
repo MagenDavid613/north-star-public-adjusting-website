@@ -48,8 +48,6 @@ interface FormData {
   email: string
   consent: boolean
   consentTimestamp: string | null
-  marketingConsent: boolean
-  marketingConsentTimestamp: string | null
   propertyType: string | null
   damageTypes: string[]
   address: string
@@ -66,7 +64,7 @@ interface FormData {
 }
 
 const EMPTY_FORM: FormData = {
-  firstName: '', lastName: '', phone: '', email: '', consent: false, consentTimestamp: null, marketingConsent: false, marketingConsentTimestamp: null,
+  firstName: '', lastName: '', phone: '', email: '', consent: false, consentTimestamp: null,
   propertyType: null, damageTypes: [],
   address: '', city: '', state: '', zip: '',
   damageDate: '', isUrgent: false, urgencyDescription: '',
@@ -99,11 +97,6 @@ export default function ClaimIntake() {
     update('consentTimestamp', checked ? new Date().toISOString() : null)
   }
 
-  const updateMarketingConsent = (checked: boolean) => {
-    update('marketingConsent', checked)
-    update('marketingConsentTimestamp', checked ? new Date().toISOString() : null)
-  }
-
   const submit = async () => {
     setSubmitted(true)
 
@@ -119,8 +112,6 @@ export default function ClaimIntake() {
           email: form.email,
           consent: form.consent,
           consentTimestamp: form.consentTimestamp,
-          marketingConsent: form.marketingConsent,
-          marketingConsentTimestamp: form.marketingConsentTimestamp,
           propertyType: form.propertyType,
           damageTypes: form.damageTypes.join(', '),
           propertyAddress: form.address,
@@ -229,13 +220,7 @@ export default function ClaimIntake() {
                 <input type="email" placeholder="Email address *" value={form.email} onChange={(e) => update('email', e.target.value)} className={inputClass()} />
               </div>
 
-              <SmsConsentFields
-                className="mt-4"
-                care={form.consent}
-                marketing={form.marketingConsent}
-                onCareChange={updateConsent}
-                onMarketingChange={updateMarketingConsent}
-              />
+              <SmsConsentFields className="mt-4" care={form.consent} onCareChange={updateConsent} />
 
               <button
                 onClick={next}

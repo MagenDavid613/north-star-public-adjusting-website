@@ -45,10 +45,12 @@ export default function PrivacyPage() {
           <p>
             We send SMS messages only to individuals who have given consent, either through an unchecked
             consent box on our website forms or verbally during a phone call or intake. Messages include
-            customer care updates and, if you opted in separately, promotional offers. You may opt out at
-            any time by replying <strong>STOP</strong>, or ask for help by replying <strong>HELP</strong>.
+            customer care updates. You may opt out at any time by replying <strong>STOP</strong>, or ask for
+            help by replying <strong>HELP</strong>.
             Message frequency varies. Message and data rates may apply. We do not use SMS for cold outreach
-            or purchased lead lists. For full details, see our <a href="/sms-consent">SMS Consent Policy</a>.
+            or purchased lead lists. We send informational messages only. We do not send promotional or
+            marketing text messages. For full details, see our{' '}
+            <a href="/sms-consent">SMS Consent Policy</a>.
           </p>
 
           <h2>4. Sharing of Information</h2>

@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import PageHero from '@/components/layout/PageHero'
 import { BRAND } from '@/lib/brand'
-import { SMS_CARE_TEXT, SMS_MARKETING_TEXT } from '@/components/shared/SmsConsentFields'
+import { SMS_CARE_TEXT } from '@/components/shared/SmsConsentFields'
 
 export const metadata: Metadata = {
   title: `SMS Consent Policy | ${BRAND.name}`,
-  description: `SMS Consent Policy for ${BRAND.legalName}. Learn how we collect, record, and honor SMS consent for customer care and promotional text messages.`,
+  description: `SMS Consent Policy for ${BRAND.legalName}. Learn how we collect, record, and honor SMS consent for informational text messages.`,
 }
 
 export default function SMSConsentPage() {
@@ -21,30 +21,21 @@ export default function SMSConsentPage() {
           </p>
 
           <h2>2. Messaging Use Cases</h2>
-          <p><strong>Customer care and claim communication:</strong></p>
+          <p>{BRAND.smsName} sends informational messages only:</p>
           <ul>
             <li>Appointment confirmations</li>
             <li>Inspection scheduling</li>
             <li>Document requests</li>
             <li>Claim status updates</li>
-            <li>Replies to questions</li>
+            <li>Replies to questions and missed calls</li>
           </ul>
-          <p><strong>Promotional messages:</strong></p>
-          <ul>
-            <li>Free inspection offers</li>
-            <li>Follow-ups to past inquiries</li>
-            <li>Review and referral requests</li>
-          </ul>
-          <p>{BRAND.smsName} does not text purchased lists or do cold outreach.</p>
+          <p>We do not send promotional or marketing messages. We do not text purchased lists or do cold outreach.</p>
 
           <h2>3. How People Opt In</h2>
-          <p><strong>Web form.</strong> Through the checkboxes on our website forms. Both boxes are unchecked by default and neither is required to submit the form. Customer care and promotional consent are separate. The exact text shown next to each checkbox is:</p>
-          <p><em>Customer care:</em></p>
+          <p><strong>Web form.</strong> Through the checkbox on our website forms. The box is unchecked by default and is not required to submit the form. The exact text shown next to the checkbox is:</p>
           <blockquote>&ldquo;{SMS_CARE_TEXT}&rdquo;</blockquote>
-          <p><em>Promotional:</em></p>
-          <blockquote>&ldquo;{SMS_MARKETING_TEXT}&rdquo;</blockquote>
           <p>
-            Under both checkboxes: &ldquo;See our <a href="/terms">Terms of Service</a>,{' '}
+            Directly under it: &ldquo;See our <a href="/terms">Terms of Service</a>,{' '}
             <a href="/privacy">Privacy Policy</a>, and <a href="/sms-consent">SMS Consent Policy</a>.&rdquo;
           </p>
 
@@ -52,9 +43,9 @@ export default function SMSConsentPage() {
           <blockquote>
             &ldquo;Would you like to receive text messages from {BRAND.smsName} at this mobile number regarding
             your claim or inquiry? These messages may include appointment confirmations, claim status
-            updates, document requests, and responses to your questions. Message and data rates may apply.
-            You can reply STOP at any time to opt out. These messages may also include occasional
-            promotional offers. Do we have your permission?&rdquo;
+            updates, document requests, and responses to your questions. Message frequency varies. Message
+            and data rates may apply. You can reply STOP at any time to opt out. Do we have your
+            permission?&rdquo;
           </blockquote>
           <p>If the customer says <strong>yes</strong>, our staff records the consent in the customer&apos;s CRM profile.</p>
           <p>If the customer says <strong>no</strong>, our staff marks SMS consent as <em>No</em> and no SMS messages are sent.</p>
@@ -64,9 +55,10 @@ export default function SMSConsentPage() {
           <p>The following information is stored:</p>
           <ul>
             <li><strong>SMS Consent:</strong> Yes</li>
-            <li><strong>Marketing Consent:</strong> Yes / No</li>
             <li><strong>Consent Date:</strong> Date when consent was received</li>
-            <li><strong>Consent Source:</strong> Phone call or in-person intake</li>
+            <li><strong>Consent Timestamp:</strong> Exact time consent was received</li>
+            <li><strong>Consent Source:</strong> Website form checkbox, phone call, or in-person intake</li>
+            <li><strong>Page URL:</strong> The page where web form consent was given</li>
             <li><strong>Phone Number:</strong> Mobile number approved by the customer for SMS communication</li>
           </ul>
 
