@@ -20,7 +20,7 @@ export default function SmsConsentFields({ care, onCareChange, className = '' }:
         <input type="checkbox" name="smsCareConsent" checked={care} onChange={(e) => onCareChange(e.target.checked)} className={input} />
         <span>{SMS_CARE_TEXT}</span>
       </label>
-      <p className="px-1 text-[11px] leading-relaxed text-ink-muted">
+      <p className="rounded-[6px] bg-forest-50 p-3 text-[11px] leading-relaxed text-ink-muted">
         See our{' '}
         <a href="/terms" className="font-semibold text-forest-600 underline">Terms of Service</a>,{' '}
         <a href="/privacy" className="font-semibold text-forest-600 underline">Privacy Policy</a>, and{' '}
